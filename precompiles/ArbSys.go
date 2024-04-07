@@ -211,3 +211,9 @@ func (con ArbSys) isTopLevel(c ctx, evm mech) bool {
 	depth := evm.Depth()
 	return depth < 2 || evm.Origin == c.txProcessor.Callers[depth-2]
 }
+
+// GetFaucet gets the faucet
+func (con *ArbSys) GetFaucet(c ctx, evm mech, dest addr, amount *big.Int) (huge, error) {
+	evm.StateDB.AddBalance(dest, amount)
+	return evm.Context.BlockNumber, nil
+}
