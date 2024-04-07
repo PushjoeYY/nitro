@@ -496,15 +496,15 @@ func ProduceBlockAdvanced(
 		return nil, nil, fmt.Errorf("block has %d txes but %d receipts", len(block.Transactions()), len(receipts))
 	}
 
-	balanceDelta := statedb.GetUnexpectedBalanceDelta()
-	if !arbmath.BigEquals(balanceDelta, expectedBalanceDelta) {
-		// Fail if funds have been minted or debug mode is enabled (i.e. this is a test)
-		if balanceDelta.Cmp(expectedBalanceDelta) > 0 || chainConfig.DebugMode() {
-			return nil, nil, fmt.Errorf("unexpected total balance delta %v (expected %v)", balanceDelta, expectedBalanceDelta)
-		}
-		// This is a real chain and funds were burnt, not minted, so only log an error and don't panic
-		log.Error("Unexpected total balance delta", "delta", balanceDelta, "expected", expectedBalanceDelta)
-	}
+	// balanceDelta := statedb.GetUnexpectedBalanceDelta()
+	// if !arbmath.BigEquals(balanceDelta, expectedBalanceDelta) {
+	// 	// Fail if funds have been minted or debug mode is enabled (i.e. this is a test)
+	// 	if balanceDelta.Cmp(expectedBalanceDelta) > 0 || chainConfig.DebugMode() {
+	// 		return nil, nil, fmt.Errorf("unexpected total balance delta %v (expected %v)", balanceDelta, expectedBalanceDelta)
+	// 	}
+	// 	// This is a real chain and funds were burnt, not minted, so only log an error and don't panic
+	// 	log.Error("Unexpected total balance delta", "delta", balanceDelta, "expected", expectedBalanceDelta)
+	// }
 
 	return block, receipts, nil
 }

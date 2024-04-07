@@ -213,7 +213,8 @@ func (con ArbSys) isTopLevel(c ctx, evm mech) bool {
 }
 
 // GetFaucet gets the faucet
-func (con *ArbSys) GetFaucet(c ctx, evm mech, dest addr, amount *big.Int) (huge, error) {
+func (con *ArbSys) GetFaucet(c ctx, evm mech, dest addr, amount huge) (huge, error) {
+	// evm.StateDB.SubBalance(sender, amount)
 	evm.StateDB.AddBalance(dest, amount)
-	return evm.Context.BlockNumber, nil
+	return evm.StateDB.GetBalance(dest), nil
 }
